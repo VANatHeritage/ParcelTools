@@ -35,7 +35,7 @@ arcpy.MakeFeatureLayer_management (inParcels, "lyrParcels")
 for locTable in tables: 
    try: 
       #Set up some variables
-      locName = os.path.basename(locTable)[4:-9]
+      locName = os.path.basename(locTable)[4:]
       arcpy.AddMessage("Working on %s..." %locName)
       
       #Join the current table to the parcels layer
