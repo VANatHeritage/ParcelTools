@@ -2,17 +2,24 @@
 # SubsetParcels.py
 # Version:  Python 2.7.5
 # Creation Date: 2017-06-21
-# Last Edit: 2020-10-08
-# Creators:  Roy Gilb and DJ Helkowski
-# Edited/Updated by Kirsten Hazler
+# Last Edit: 2017-10-16
+# Creator:  Roy Gilb and DJ Helkowski
+# Edited by Kirsten Hazler
 #
+#  Notes:
+
 # ----------------------------------------------------------------------------------------
 
 # Import required modules
 import arcpy
+from arcpy.sa import *
+arcpy.CheckOutExtension("Spatial")
 import os # provides access to operating system functionality such as file and directory paths
 import sys # provides access to Python system functions
 import traceback # used for error handling
+import gc # garbage collection
+from datetime import datetime # for time-stamping
+
 
 # Script arguments to be input by user
 inParcels = arcpy.GetParameterAsText(0)    #Input parcels layer
@@ -57,3 +64,7 @@ for locTable in tables:
       arcpy.AddWarning(msgs)
       arcpy.AddWarning(pymsg)
       arcpy.AddMessage(arcpy.GetMessages(1))
+
+
+
+
