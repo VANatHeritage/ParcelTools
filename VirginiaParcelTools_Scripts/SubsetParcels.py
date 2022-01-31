@@ -2,17 +2,24 @@
 # SubsetParcels.py
 # Version:  Python 2.7.5
 # Creation Date: 2017-06-21
-# Last Edit: 2020-10-08
-# Creators:  Roy Gilb and DJ Helkowski
-# Edited/Updated by Kirsten Hazler
+# Last Edit: 2021-04-06
+# Creator:  Roy Gilb and DJ Helkowski
+# Edited by Kirsten Hazler
 #
+#  Notes:
+
 # ----------------------------------------------------------------------------------------
 
 # Import required modules
 import arcpy
+from arcpy.sa import *
+arcpy.CheckOutExtension("Spatial")
 import os # provides access to operating system functionality such as file and directory paths
 import sys # provides access to Python system functions
 import traceback # used for error handling
+import gc # garbage collection
+from datetime import datetime # for time-stamping
+
 
 # Script arguments to be input by user
 inParcels = arcpy.GetParameterAsText(0)    #Input parcels layer
@@ -22,8 +29,8 @@ outGDB = arcpy.GetParameterAsText(2)       #GDB to store the output feature clas
 arcpy.env.workspace = inLocalGDB
 tables = arcpy.ListTables()
 
-#Make a feature layer
-arcpy.MakeFeatureLayer_management (inParcels, "lyrParcels")
+# #Make a feature layer
+# arcpy.MakeFeatureLayer_management (inParcels, "lyrParcels")
 
 for locTable in tables: 
    try: 
@@ -31,6 +38,11 @@ for locTable in tables:
       locName = os.path.basename(locTable)[4:]
       arcpy.AddMessage("Working on %s..." %locName)
       
+      #Make a feature layer
+      attName = locName.replace("_", " ")
+      where_clause = "LOCALITY = '%s'" %attName
+      arcpy.MakeFeatureLayer_management (inParcels, "lyrParcels", where_clause)
+            
       #Join the current table to the parcels layer
       arcpy.AddMessage("Joining attributes")
       arcpy.AddJoin_management ("lyrParcels", "VGIN_QPID", locTable, "VGIN_QPID", "KEEP_COMMON")
