@@ -16,7 +16,14 @@ def unique_values(table, field):
    ''' Gets list of unique values in a field.
    Thanks, ArcPy Cafe! https://arcpy.wordpress.com/2012/02/01/create-a-list-of-unique-field-values/'''
    with arcpy.da.SearchCursor(table, [field]) as cursor:
-      return sorted({row[0] for row in cursor})
+      uvs = {row[0] for row in cursor}
+      # Note any null values that break the sorting method
+      for uv in uvs:
+         if uv is None:
+            arcpy.AddMessage("Null "+field+" values are present in "+table)
+         else:
+            pass
+      return sorted(uvs)
 
 def getFlds(table):
    flds = [a.name for a in arcpy.ListFields(table)]
