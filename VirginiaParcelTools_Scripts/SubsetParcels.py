@@ -2,8 +2,8 @@
 # SubsetParcels.py
 # Version:  Python 3.x
 # Creation Date: 2017-06-21
-# Last Edit: 2023-11-09
-# Creators:  Roy Gilb, DJ Helkowski, Kirsten Hazler, David Bucklin
+# Last Edit: 2024-05-21
+# Creators:  Roy Gilb, DJ Helkowski, Kirsten Hazler, David Bucklin, Liam Megraw
 
 # ----------------------------------------------------------------------------------------
 
